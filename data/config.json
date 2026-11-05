@@ -1,5 +1,5 @@
 {
-  "periodo": "202710",
-  "horarioOnlyDownloadUrl": "",
-  "rutLookupUrl": ""
+ "periodo": "202620",
+ "horarioOnlyDownloadUrl": "https://script.google.com/macros/s/AKfycbwcNtDPYIbyir3qc__VvjJqQUQUs-8GtbknLa63s6TC6RZ1ahjG5QdAAHNfj2rxrnTlWw/exec?action=downloadHorarioExcel",
+ "rutLookupUrl": "https://script.google.com/macros/s/AKfycbwcNtDPYIbyir3qc__VvjJqQUQUs-8GtbknLa63s6TC6RZ1ahjG5QdAAHNfj2rxrnTlWw/exec"
 }
