@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Revisión de Topes · Horario Ingeniería</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <div class="page-header">
+        <h1>Horario Ingeniería · Revisión de topes</h1>
+        <div class="meta" id="periodMeta"></div>
+      </div>
+
+      <div class="student-box">
+        <div class="student-form">
+          <div class="student-input">
+            <label for="studentRut">RUT DEL ALUMNO</label>
+            <input id="studentRut" type="text" autocomplete="off" placeholder="Ej: 12.345.678-9"
+                   onkeydown="if (event.key === 'Enter') buscarAlumno()" />
+          </div>
+          <button id="btnBuscarAlumno" class="action-btn btn-primary" onclick="buscarAlumno()">Cargar ramos inscritos</button>
+          <button id="btnLimpiarAlumno" class="action-btn btn-secondary hidden" onclick="limpiarAlumno()">Quitar alumno</button>
+        </div>
+        <div id="studentStatus" class="student-status hidden"></div>
+      </div>
+
+      <div class="filters" id="filtersGrid"></div>
+
+      <div class="actions">
+        <button class="action-btn btn-secondary" onclick="limpiar()">Limpiar filtros</button>
+        <button id="conflictBtn" class="action-btn btn-secondary btn-conflict" onclick="toggleConflictReview()">Revisar topes en selección actual</button>
+        <button class="action-btn btn-primary" onclick="descargarExcelOriginal()">Descargar Excel</button>
+      </div>
+
+      <div class="subactions">
+        <button id="btnLunes" class="action-btn btn-secondary btn-dayfilter" onclick="toggleDayNonEmpty('lunes')">Solo LUNES con valor</button>
+        <button id="btnMartes" class="action-btn btn-secondary btn-dayfilter" onclick="toggleDayNonEmpty('martes')">Solo MARTES con valor</button>
+        <button id="btnMiercoles" class="action-btn btn-secondary btn-dayfilter" onclick="toggleDayNonEmpty('miercoles')">Solo MIÉRCOLES con valor</button>
+        <button id="btnJueves" class="action-btn btn-secondary btn-dayfilter" onclick="toggleDayNonEmpty('jueves')">Solo JUEVES con valor</button>
+        <button id="btnViernes" class="action-btn btn-secondary btn-dayfilter" onclick="toggleDayNonEmpty('viernes')">Solo VIERNES con valor</button>
+        <button class="action-btn btn-secondary" onclick="clearDayNonEmptyFilters()">Limpiar L-V</button>
+      </div>
+
+      <div class="loading" id="loading">Cargando...</div>
+    </div>
+
+    <div id="conflictCard" class="card hidden">
+      <div class="legend-header">
+        <div class="legend-title" id="conflictTitle">Topes encontrados</div>
+        <button class="legend-toggle" onclick="toggleConflictReview()">Cerrar revisión</button>
+      </div>
+      <div class="conflict-table-wrap">
+        <table class="conflict-table">
+          <thead>
+            <tr>
+              <th>Tipo de tope</th>
+              <th>Cuándo</th>
+              <th>Curso A</th>
+              <th>Curso B</th>
+            </tr>
+          </thead>
+          <tbody id="conflictBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="legend-header">
+        <div class="legend-title">Leyenda / información original</div>
+        <button id="legendToggleBtn" class="legend-toggle" onclick="toggleLegend()">Ocultar leyenda</button>
+      </div>
+
+      <div id="legendWrap" class="legend-table-wrap">
+        <table class="legend-table">
+          <tbody id="legendBody">
+            <tr><td>No hay leyenda cargada.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="meta" id="meta">Cargando resultados...</div>
+
+      <div id="topScroll" class="scroll-sync">
+        <div id="topScrollInner" class="scroll-sync-inner"></div>
+      </div>
+
+      <div id="tableWrap" class="table-wrap">
+        <table id="mainTable">
+          <thead>
+            <tr>
+              <th>AREA</th>
+              <th>PLAN DE ESTUDIO</th>
+              <th>NRC</th>
+              <th>CONECTOR DE LIGA</th>
+              <th>LC</th>
+              <th>MATERIA</th>
+              <th>CURSO</th>
+              <th>SECC.</th>
+              <th>TITULO</th>
+              <th>LUNES</th>
+              <th>MARTES</th>
+              <th>MIERCOLES</th>
+              <th>JUEVES</th>
+              <th>VIERNES</th>
+              <th>INICIO</th>
+              <th>FIN</th>
+              <th>SALA</th>
+              <th>TIPO DE REUNIÓN</th>
+              <th>PROFESOR</th>
+            </tr>
+          </thead>
+          <tbody id="resultsBody">
+            <tr><td colspan="19">Cargando resultados...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div id="modalOverlay" class="modal-overlay hidden">
+    <div class="modal-box">
+      <div class="modal-title" id="modalTitle">Mensaje</div>
+      <div class="modal-message" id="modalMessage"></div>
+      <div class="modal-actions">
+        <button class="modal-btn" onclick="closeModal()">Aceptar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>
