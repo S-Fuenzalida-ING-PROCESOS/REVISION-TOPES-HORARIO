@@ -32,6 +32,7 @@
       <div class="actions">
         <button class="action-btn btn-secondary" onclick="limpiar()">Limpiar filtros</button>
         <button id="conflictBtn" class="action-btn btn-secondary btn-conflict" onclick="toggleConflictReview()">Revisar topes en selección actual</button>
+        <button id="bloqueoBtn" class="action-btn btn-secondary btn-bloqueo" onclick="toggleBloqueoReview()">Revisar topes y bloqueos académicos</button>
         <button class="action-btn btn-primary" onclick="descargarExcelOriginal()">Descargar Excel</button>
       </div>
 
@@ -52,6 +53,12 @@
         <div class="legend-title" id="conflictTitle">Topes encontrados</div>
         <button class="legend-toggle" onclick="toggleConflictReview()">Cerrar revisión</button>
       </div>
+      <div id="conflictNote" class="conflict-note hidden">
+        Según los criterios de excepciones de la Facultad, solo se puede solicitar tope entre AYUD-AYUD, CLAS-AYUD,
+        LAB-AYUD, LAB-CLAS y LAB-LAB, nunca entre clases ni con evaluaciones, y solo un tope por alumno.
+        Un tope permitido es <strong>bloqueo académico</strong> si ambos bloques están bloqueados (bloque marcado como
+        bloqueado, o ayudantía con 4 o más evaluaciones); basta con que uno esté libre para que sea autorizable.
+      </div>
       <div class="conflict-table-wrap">
         <table class="conflict-table">
           <thead>
@@ -60,6 +67,7 @@
               <th>Cuándo</th>
               <th>Curso A</th>
               <th>Curso B</th>
+              <th id="conflictNormHeader" class="hidden">Normativa / bloqueo</th>
             </tr>
           </thead>
           <tbody id="conflictBody"></tbody>
