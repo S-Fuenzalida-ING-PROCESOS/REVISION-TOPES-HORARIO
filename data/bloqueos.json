@@ -1,0 +1,1048 @@
+{
+ "generatedAt": "2026-11-05T21:18:34.415801Z",
+ "cursos": {
+  "IOC5206": {
+   "titulo": "Administración y Control de Proyectos",
+   "numEval": 2,
+   "CLAS": "E",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICA5120": {
+   "titulo": "Air Quality and Environmental Pollution",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ING1205": {
+   "titulo": "Álgebra Lineal",
+   "numEval": 4,
+   "CLAS": "",
+   "AYUD": "E",
+   "LAB": ""
+  },
+  "ICC4101": {
+   "titulo": "Algorithms and Competitive Programming",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": "B"
+  },
+  "ICC4206": {
+   "titulo": "Almacenamiento y Procesamiento Masivo de Datos",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICE3104": {
+   "titulo": "Análisis de Circuitos",
+   "numEval": 2,
+   "CLAS": "",
+   "AYUD": "E",
+   "LAB": "B"
+  },
+  "IOC3201": {
+   "titulo": "Análisis Estructural",
+   "numEval": 3,
+   "CLAS": "",
+   "AYUD": "B",
+   "LAB": ""
+  },
+  "ICC4203": {
+   "titulo": "Aplicaciones Móviles",
+   "numEval": 4,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICC3202": {
+   "titulo": "Arquitectura de Computadores (ICC y HI)",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICE5108": {
+   "titulo": "Artificial Intelligence",
+   "numEval": 2,
+   "CLAS": "",
+   "AYUD": "E",
+   "LAB": ""
+  },
+  "ICA4130": {
+   "titulo": "Balances de Materia y Energía",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICC3204": {
+   "titulo": "Bases de Datos",
+   "numEval": 0,
+   "CLAS": "B",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICI5000": {
+   "titulo": "Business Analytics",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ING1206": {
+   "titulo": "Cálculo I",
+   "numEval": 3,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ING2102": {
+   "titulo": "Cálculo II",
+   "numEval": 4,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICA4110": {
+   "titulo": "Cinética y Diseño de Reactores Químicos",
+   "numEval": 4,
+   "CLAS": "E",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICE4204": {
+   "titulo": "Comunicaciones Digitales",
+   "numEval": 3,
+   "CLAS": "E",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICI3130": {
+   "titulo": "Contabilidad y Estados Financieros",
+   "numEval": 2,
+   "CLAS": "",
+   "AYUD": "B",
+   "LAB": ""
+  },
+  "ICE4206": {
+   "titulo": "Control Automático",
+   "numEval": 2,
+   "CLAS": "E",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICE4104": {
+   "titulo": "Conversión de Energía",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "IOC5106": {
+   "titulo": "Cost Engineering",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICI5200": {
+   "titulo": "Deep Learning",
+   "numEval": 3,
+   "CLAS": "E",
+   "AYUD": "",
+   "LAB": "B"
+  },
+  "ICQ5101": {
+   "titulo": "Dinamica y Control de Procesos",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICQ5102": {
+   "titulo": "Diseño de Reactores Avanzados",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICE3206": {
+   "titulo": "Diseño de Sistemas Embebidos",
+   "numEval": 3,
+   "CLAS": "E",
+   "AYUD": "",
+   "LAB": "B"
+  },
+  "IOC5120": {
+   "titulo": "Diseño en Acero",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "B",
+   "LAB": ""
+  },
+  "IOC5204": {
+   "titulo": "Diseño Sismorresistente",
+   "numEval": 3,
+   "CLAS": "",
+   "AYUD": "B",
+   "LAB": ""
+  },
+  "ICE4107": {
+   "titulo": "Diseño y Desarrollo de Sistemas IoT (HI)",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": "B"
+  },
+  "ICI4210": {
+   "titulo": "Diseño y Evaluación de Proyectos Industriales",
+   "numEval": 2,
+   "CLAS": "E",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICA4210": {
+   "titulo": "Diseño y Optimización de Procesos Industriales",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "IOC5100": {
+   "titulo": "Dynamics of Structures",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "B",
+   "LAB": ""
+  },
+  "ICA3130": {
+   "titulo": "Ecología, Medio Ambiente y Energía",
+   "numEval": 3,
+   "CLAS": "E",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICI4110": {
+   "titulo": "Econometría",
+   "numEval": 2,
+   "CLAS": "",
+   "AYUD": "B",
+   "LAB": ""
+  },
+  "ICA5220": {
+   "titulo": "Economía Ambiental y de los Recursos Naturales",
+   "numEval": 4,
+   "CLAS": "E",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ING2101": {
+   "titulo": "Ecuaciones Diferenciales",
+   "numEval": 4,
+   "CLAS": "",
+   "AYUD": "E",
+   "LAB": ""
+  },
+  "ING2202": {
+   "titulo": "Electricidad y Magnetismo",
+   "numEval": 4,
+   "CLAS": "",
+   "AYUD": "E",
+   "LAB": ""
+  },
+  "ICE5109": {
+   "titulo": "Electrónica de Potencia",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICC6110": {
+   "titulo": "Emprendimiento e Innovación en Software",
+   "numEval": 0,
+   "CLAS": "B",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ING2206": {
+   "titulo": "Estadística Aplicada",
+   "numEval": 3,
+   "CLAS": "",
+   "AYUD": "B",
+   "LAB": ""
+  },
+  "ING2204": {
+   "titulo": "Estática",
+   "numEval": 3,
+   "CLAS": "",
+   "AYUD": "B",
+   "LAB": ""
+  },
+  "ICC3203": {
+   "titulo": "Estructuras de Datos y Algoritmos",
+   "numEval": 4,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": "E"
+  },
+  "ICI3000": {
+   "titulo": "Estudio de Casos en Gestión de Operaciones",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "IOC5104": {
+   "titulo": "Evaluación de Proyectos de Ingeniería",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICA5140": {
+   "titulo": "Evaluación de Proyectos de Ingeniería Ambiental",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICI4120": {
+   "titulo": "Finanzas I",
+   "numEval": 2,
+   "CLAS": "",
+   "AYUD": "E",
+   "LAB": ""
+  },
+  "ICI4230": {
+   "titulo": "Finanzas II",
+   "numEval": 3,
+   "CLAS": "",
+   "AYUD": "B",
+   "LAB": ""
+  },
+  "IOC5107": {
+   "titulo": "Finite Elements",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "IOC3203": {
+   "titulo": "Fluid Mechanics",
+   "numEval": 3,
+   "CLAS": "",
+   "AYUD": "E",
+   "LAB": "B"
+  },
+  "ICQ5103": {
+   "titulo": "Formulación y Evaluación de Proyectos",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "IOC5150": {
+   "titulo": "Fundaciones",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICC4104": {
+   "titulo": "Fundamentos de Ciberseguridad",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ING1208": {
+   "titulo": "Fundamentos de Economía",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "B",
+   "LAB": ""
+  },
+  "ICE5107": {
+   "titulo": "Fundamentos de Energias Renovables",
+   "numEval": 2,
+   "CLAS": "E",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ING1102": {
+   "titulo": "Fundamentos de Química",
+   "numEval": 3,
+   "CLAS": "",
+   "AYUD": "B",
+   "LAB": "B"
+  },
+  "ICA6110": {
+   "titulo": "Gestión Ambiental y Producción Limpia",
+   "numEval": 3,
+   "CLAS": "E",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICI4220": {
+   "titulo": "Gestión de Operaciones",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "B",
+   "LAB": ""
+  },
+  "ICI5220": {
+   "titulo": "Gestión de Personas y Desarrollo Organizacional",
+   "numEval": 2,
+   "CLAS": "E",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICC5203": {
+   "titulo": "Gestión de Proyectos de Software",
+   "numEval": 4,
+   "CLAS": "E",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICI5210": {
+   "titulo": "Gestión Estratégica",
+   "numEval": 2,
+   "CLAS": "E",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICI5030": {
+   "titulo": "Gestión Financiera",
+   "numEval": 2,
+   "CLAS": "E",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICA5110": {
+   "titulo": "Gestión Residuos Sólidos y Remediación de Suelos",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICQ5201": {
+   "titulo": "Gestión y Administración Industrial",
+   "numEval": 3,
+   "CLAS": "E",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "IOC4103": {
+   "titulo": "Hidráulica",
+   "numEval": 2,
+   "CLAS": "E",
+   "AYUD": "B",
+   "LAB": ""
+  },
+  "IOC5105": {
+   "titulo": "Hidráulica Urbana",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "IOC4208": {
+   "titulo": "Hidrología",
+   "numEval": 2,
+   "CLAS": "",
+   "AYUD": "B",
+   "LAB": ""
+  },
+  "IOC4101": {
+   "titulo": "Hormigón Armado",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "B",
+   "LAB": ""
+  },
+  "IOC5205": {
+   "titulo": "Hormigón Armado Avanzado",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICQ4101": {
+   "titulo": "Ingeniería Biológica",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICQ4202": {
+   "titulo": "Ingeniería de Bioprocesos",
+   "numEval": 3,
+   "CLAS": "E",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICA4230": {
+   "titulo": "Ingeniería de Bioprocesos Ambientales",
+   "numEval": 3,
+   "CLAS": "E",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "IOC5207": {
+   "titulo": "Ingeniería Vial",
+   "numEval": 2,
+   "CLAS": "E",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICI5100": {
+   "titulo": "Instituciones Financieras",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICC5106": {
+   "titulo": "Inteligencia Artificial Aplicada",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "IOC3204": {
+   "titulo": "Introducción a la Geomecánica",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "B",
+   "LAB": ""
+  },
+  "ICC4204": {
+   "titulo": "Introducción a la Ingeniería de Software",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ING1207": {
+   "titulo": "Introducción a la Mecánica",
+   "numEval": 3,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICE4106": {
+   "titulo": "Introducción a las Comunicaciones",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ING1107": {
+   "titulo": "Introducción al Álgebra y Geometría",
+   "numEval": 3,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ING1108": {
+   "titulo": "Introducción al Cálculo",
+   "numEval": 4,
+   "CLAS": "",
+   "AYUD": "E",
+   "LAB": ""
+  },
+  "ICQ5104": {
+   "titulo": "Laboratorio de Procesos",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": "B"
+  },
+  "ICQ6101": {
+   "titulo": "Legislación Laboral, Seguridad e Impacto Ambiental",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICA5130": {
+   "titulo": "Legislación y Evaluación de Impacto Ambiental",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICI5130": {
+   "titulo": "Logistics",
+   "numEval": 3,
+   "CLAS": "",
+   "AYUD": "B",
+   "LAB": ""
+  },
+  "ICI4203": {
+   "titulo": "Macroeconomía",
+   "numEval": 2,
+   "CLAS": "",
+   "AYUD": "E",
+   "LAB": ""
+  },
+  "ICQ4203": {
+   "titulo": "Máquinas de Transformación",
+   "numEval": 4,
+   "CLAS": "E",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICA4120": {
+   "titulo": "Máquinas de Transformación Física y Química",
+   "numEval": 4,
+   "CLAS": "E",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICI5120": {
+   "titulo": "Marketing",
+   "numEval": 2,
+   "CLAS": "E",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "IOC4102": {
+   "titulo": "Materiales de Construcción",
+   "numEval": 3,
+   "CLAS": "E",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "IOC3101": {
+   "titulo": "Mecánica de Materiales",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "B",
+   "LAB": ""
+  },
+  "ING2105": {
+   "titulo": "Mecánica y Ondas",
+   "numEval": 3,
+   "CLAS": "E",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICE5105": {
+   "titulo": "Mercados Eléctricos",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "IOC4201": {
+   "titulo": "Métodos Computacionales en Obras Civiles",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": "B"
+  },
+  "ICI3104": {
+   "titulo": "Métodos Estadísticos (HI)",
+   "numEval": 3,
+   "CLAS": "",
+   "AYUD": "B",
+   "LAB": ""
+  },
+  "ICI3103": {
+   "titulo": "Métodos Estadísticos para la Gestión",
+   "numEval": 3,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": "B"
+  },
+  "IOC3205": {
+   "titulo": "Métodos Numéricos (HI)",
+   "numEval": 3,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": "B"
+  },
+  "IOC3103": {
+   "titulo": "Métodos Numéricos (IOC, ICA, ICQ)",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": "B"
+  },
+  "IOC4202": {
+   "titulo": "Métodos y Técnicas de Construcción",
+   "numEval": 2,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICQ4102": {
+   "titulo": "Microbiología Industrial",
+   "numEval": 3,
+   "CLAS": "E",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICA3104": {
+   "titulo": "Microbiología Industrial y Ambiental",
+   "numEval": 3,
+   "CLAS": "E",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICI3204": {
+   "titulo": "Microeconomía",
+   "numEval": 2,
+   "CLAS": "",
+   "AYUD": "B",
+   "LAB": ""
+  },
+  "ICI5020": {
+   "titulo": "Modelamiento del Transporte",
+   "numEval": 2,
+   "CLAS": "E",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICI3205": {
+   "titulo": "Modelos Estocásticos",
+   "numEval": 3,
+   "CLAS": "",
+   "AYUD": "B",
+   "LAB": ""
+  },
+  "ICA5150": {
+   "titulo": "Obras Civiles Sanitarias",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICE3203": {
+   "titulo": "Optical Systems",
+   "numEval": 2,
+   "CLAS": "E",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICI3101": {
+   "titulo": "Optimización",
+   "numEval": 3,
+   "CLAS": "",
+   "AYUD": "B",
+   "LAB": ""
+  },
+  "ICI5110": {
+   "titulo": "Organización Industrial",
+   "numEval": 2,
+   "CLAS": "",
+   "AYUD": "B",
+   "LAB": ""
+  },
+  "ICC3100": {
+   "titulo": "Paradigmas de Programación",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICC3104": {
+   "titulo": "Pensamiento Algorítmico (HI)",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICQ5202": {
+   "titulo": "Plant Design for Chemical Engineering",
+   "numEval": 3,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": "E"
+  },
+  "ICE4203": {
+   "titulo": "Potencia Eléctrica",
+   "numEval": 2,
+   "CLAS": "E",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICE3202": {
+   "titulo": "Procesamiento de Señales",
+   "numEval": 3,
+   "CLAS": "E",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICQ4204": {
+   "titulo": "Process Design and Optimization",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ING1103": {
+   "titulo": "Programación",
+   "numEval": 5,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": "B"
+  },
+  "ICC3102": {
+   "titulo": "Programación de Bajo Nivel",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": "B"
+  },
+  "ICI3206": {
+   "titulo": "Programación Matemática",
+   "numEval": 3,
+   "CLAS": "E",
+   "AYUD": "B",
+   "LAB": ""
+  },
+  "IOC6101": {
+   "titulo": "Proyecto Civil (DPI)",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "IOC6102": {
+   "titulo": "Proyecto Civil (Estructuras)",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICE4205": {
+   "titulo": "Proyecto de Diseño Eléctrico",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": "B"
+  },
+  "ICC4205": {
+   "titulo": "Proyecto Desarrollo de Software",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICE5205": {
+   "titulo": "Proyecto Eléctrico",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICQ4103": {
+   "titulo": "Química Inorgánica y Orgánica",
+   "numEval": 3,
+   "CLAS": "",
+   "AYUD": "E",
+   "LAB": ""
+  },
+  "ICE5102": {
+   "titulo": "Redes de Comunicación",
+   "numEval": 2,
+   "CLAS": "E",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICE3105": {
+   "titulo": "Señales y Sistemas",
+   "numEval": 2,
+   "CLAS": "E",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICI5010": {
+   "titulo": "Series de Tiempo",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICI4202": {
+   "titulo": "Simulación",
+   "numEval": 2,
+   "CLAS": "E",
+   "AYUD": "",
+   "LAB": "B"
+  },
+  "ICE5106": {
+   "titulo": "Sistemas de Potencia",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "IOC4209": {
+   "titulo": "Sistemas de Transporte",
+   "numEval": 3,
+   "CLAS": "E",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICE3106": {
+   "titulo": "Sistemas Digitales",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": "B"
+  },
+  "ICE3207": {
+   "titulo": "Sistemas Electrónicos",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": "B"
+  },
+  "ICE4105": {
+   "titulo": "Sistemas Electrónicos Avanzados",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": "B"
+  },
+  "ICC5107": {
+   "titulo": "Sistemas Embebidos",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICC3201": {
+   "titulo": "Sistemas Operativos y Redes",
+   "numEval": 4,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICC5204": {
+   "titulo": "Software Architecture",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICC5108": {
+   "titulo": "Software Design",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": "B"
+  },
+  "ING3212": {
+   "titulo": "Taller de Diseño Digital y Fabricación 3D (HI)",
+   "numEval": 0,
+   "CLAS": "B",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICC4105": {
+   "titulo": "Taller de Inteligencia Artificial (HI)",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "IOC5203": {
+   "titulo": "Tecnología del Hormigón",
+   "numEval": 2,
+   "CLAS": "E",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICI6100": {
+   "titulo": "Tecnologías para la Transformación Digital",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ING2106": {
+   "titulo": "Teoría de Probabilidades",
+   "numEval": 3,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ING2207": {
+   "titulo": "Termodinámica",
+   "numEval": 2,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICQ3102": {
+   "titulo": "Termodinámica Aplicada",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICA3102": {
+   "titulo": "Termotecnia",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICI6010": {
+   "titulo": "Tópicos en Finanzas",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "IOC3220": {
+   "titulo": "Topografía Aplicada",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICQ3202": {
+   "titulo": "Transferencia de Calor",
+   "numEval": 4,
+   "CLAS": "E",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICQ3203": {
+   "titulo": "Transferencia de Masa",
+   "numEval": 3,
+   "CLAS": "E",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICC5120": {
+   "titulo": "User Experience Design",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": ""
+  },
+  "ICA5210": {
+   "titulo": "Wastewater Treatment",
+   "numEval": 3,
+   "CLAS": "E",
+   "AYUD": "",
+   "LAB": "E"
+  },
+  "ICC4130": {
+   "titulo": "Web Technologies",
+   "numEval": 0,
+   "CLAS": "",
+   "AYUD": "",
+   "LAB": "B"
+  }
+ }
+}

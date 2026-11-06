@@ -3,11 +3,15 @@
 Horario interactivo de Ingeniería UANDES para revisar topes entre NRC.
 Piloto para el periodo **202710**.
 
+Sitio: https://s-fuenzalida-ing-procesos.github.io/REVISION-TOPES-HORARIO/
+
 - Una sola vista, sin login: cualquiera con el enlace puede entrar.
 - Filtros por área, materia, curso, sección, título, NRC, LC, sala, tipo y profesor.
 - **Cargar ramos inscritos por RUT de alumno**: filtra automáticamente los NRC
   del alumno (reporte UG307) y revisa sus topes.
 - Revisión de topes de la selección actual, con lista de topes y celdas marcadas.
+- **Revisión de topes y bloqueos académicos**: clasifica cada tope según los criterios
+  de excepciones de la Facultad y la hoja BLOQUEOS.
 - Descarga del Excel de la hoja HORARIO.
 
 ## Estructura
@@ -16,11 +20,12 @@ Piloto para el periodo **202710**.
 index.html, app.js, styles.css   Sitio estático (GitHub Pages)
 data/config.json                 Periodo y URL del Web App (lo escribe Apps Script)
 data/data.json                   Filas de la hoja HORARIO (lo escribe Apps Script)
+data/bloqueos.json               Bloqueos por curso, de la hoja BLOQUEOS (lo escribe Apps Script)
 apps-script/Web.gs               Parámetros, UG307, Web App, publicación, descarga
 apps-script/Horario.gs           Lógica de construcción del horario (ver paso 2)
 ```
 
-> El `data/data.json` incluido es una **muestra con datos 202620** para probar
+> `data/data.json` y `data/bloqueos.json` incluidos son una **muestra con datos 202620** para probar
 > el sitio. Se reemplaza en la primera publicación desde Apps Script.
 
 ## Puesta en marcha
@@ -62,7 +67,16 @@ URL no cambie.
 
 Repetir cada vez que haya un UG307 nuevo (se invalida el caché automáticamente).
 
-### 5. Horario y publicación
+### 5. Bloqueos académicos
+Copiar al Google Sheet la hoja **`BLOQUEOS`** (una fila por curso, códigos del plan 2026)
+con las columnas `CODIGO`, `TITULO`, `Clases`, `Ayudantías`, `Laboratorios o Talleres`
+y `NUM EVALUACIONES`. En las columnas de tipo de hora:
+- `BLOQUEADO` (o fondo amarillo) → bloque bloqueado.
+- `EVALUACIONES` (o fondo azul) → hay evaluaciones en ese bloque.
+
+Se publica junto con el horario en `data/bloqueos.json`.
+
+### 6. Horario y publicación
 Macros → Crear Horario → Llenar Salas Horario → Actualizar Salas Pruebas →
 **Publicar/Actualizar web**. Antes, *Diagnosticar* muestra si falta algo.
 
@@ -87,6 +101,23 @@ distinto número de curso).
 
 Los NRC inscritos que no están en la hoja HORARIO (por ejemplo, CEG u otros
 cursos de otras facultades) se listan aparte y no se revisan.
+
+## Revisión de topes y bloqueos académicos
+
+Botón **Revisar topes y bloqueos académicos**. Usa los mismos topes de la tabla
+anterior y clasifica cada uno según los criterios de excepciones de la Facultad:
+
+| Resultado | Cuándo |
+|---|---|
+| No permitido | CLAS-CLAS, o cualquier tope que involucre PRBA/EXAM |
+| Bloqueo académico | Tope de tipo permitido (AYUD-AYUD, CLAS-AYUD, LAB-AYUD, LAB-CLAS, LAB-LAB) en que **ambos** bloques están bloqueados |
+| Autorizable con solicitud | Tope de tipo permitido en que al menos uno de los dos bloques está libre |
+
+Un bloque está bloqueado si su celda dice `BLOQUEADO`, o si es ayudantía con
+`EVALUACIONES` y `NUM EVALUACIONES` ≥ 4. Los cursos cuyo código no está en BLOQUEOS
+heredan los bloqueos de otro curso de su misma LC (o conector de liga); si no hay
+ninguno, se consideran libres. Con un alumno cargado, se avisa si tiene más de un
+par de cursos con tope autorizable (la normativa permite solo un tope por alumno).
 
 ## Nota sobre fechas de primer semestre
 
