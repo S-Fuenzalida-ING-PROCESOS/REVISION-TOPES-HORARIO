@@ -34,7 +34,10 @@ let STATIC_DATA = null;
 let OWN_WEEKLY_BLOCKS = {};        // NRC → bloques semanales (de todo el horario)
 let DATA_NRC_SET = new Set();      // NRC presentes en data.json (normalizados)
 
+let BLOQUEOS = null;               // data/bloqueos.json → { cursos: { CODIGO: {CLAS, AYUD, LAB, numEval} } }
+let LC_BLOQUEO_CODE = {};          // LC/conector → código con información de bloqueo
 let conflictReviewActive = false;
+let reviewMode = 'basic';          // 'basic' | 'bloqueos'
 let currentRenderedRows = [];
 let currentRowElements = [];
 let rawQueryRows = [];
@@ -149,6 +152,34 @@ async function loadStaticFiles() {
     if (!rec || !rec.weekly) return;
     (OWN_WEEKLY_BLOCKS[rec.nrc] = OWN_WEEKLY_BLOCKS[rec.nrc] || []).push(rec);
   });
+
+  // Bloqueos académicos (opcional: si no existe el archivo, el botón avisa).
+  BLOQUEOS = null;
+  LC_BLOQUEO_CODE = {};
+  try {
+    const res = await fetch('./data/bloqueos.json', { cache: 'no-store' });
+    if (res.ok) BLOQUEOS = await res.json();
+  } catch (e) { /* sin bloqueos */ }
+
+  if (BLOQUEOS?.cursos) {
+    // Cursos con código antiguo o sin fila en BLOQUEOS heredan los bloqueos de
+    // otro curso de su misma LC (o conector de liga) que sí tenga información.
+    rows.forEach(row => {
+      const code = courseCode(row.meta);
+      if (!BLOQUEOS.cursos[code]) return;
+      [row.meta.lc, row.meta.conector].forEach(k => {
+        const key = normalizeText(k);
+        if (key && !LC_BLOQUEO_CODE[key]) LC_BLOQUEO_CODE[key] = code;
+      });
+    });
+  }
+}
+
+function courseCode(meta) {
+  const materia = normalizeText(meta.materia).replace(/\s+/g, '');
+  let curso = normalizeText(meta.curso).replace(/^'/, '').replace(/\s+/g, '');
+  if (/^\d+$/.test(curso)) curso = curso.padStart(4, '0');
+  return materia + curso;
 }
 
 function renderPeriodMeta() {
@@ -437,6 +468,8 @@ function queryAndRender() {
 function normalizeTipo(value) {
   const t = normalizeText(value);
   if (t === 'LABT' || t === 'LAB' || t === 'TALLER') return 'LAB/TALLER';
+  if (t === 'OLIN') return 'CLAS';   // clase online
+  if (t === 'AYON') return 'AYUD';   // ayudantía online
   return t;
 }
 
@@ -594,11 +627,85 @@ function describeRow(rec) {
   return `NRC ${m.nrc} · ${m.materia}${m.curso} ${m.titulo} · ${m.tipo}`;
 }
 
-function markCell(rowIndex, colIndex, message) {
+/* --------------------------------------------------------------------------
+ * Normativa de topes y bloqueos académicos
+ *
+ * Criterios de excepciones de la Facultad: se puede solicitar tope solo entre
+ * AYUD-AYUD, CLAS-AYUD, LAB-AYUD, LAB-CLAS y LAB-LAB. Nunca CLAS-CLAS ni topes
+ * que involucren evaluaciones. Solo se permite un tope por alumno.
+ *
+ * Bloqueo académico (data/bloqueos.json, hoja BLOQUEOS): un bloque está
+ * bloqueado si está marcado BLOQUEADO (amarillo), o si es AYUD con
+ * EVALUACIONES (azul) y NUM EVALUACIONES >= umbral (4). Un tope permitido se
+ * autoriza si al menos uno de los dos bloques está libre; si ambos están
+ * bloqueados → BLOQUEO ACADÉMICO.
+ * ------------------------------------------------------------------------ */
+
+const TIPO_SHORT = { CLAS: 'CLAS', AYUD: 'AYUD', 'LAB/TALLER': 'LAB', PRBA: 'PRBA', EXAM: 'EXAM' };
+const STATUS_STYLE = {
+  NO_PERMITIDO: { label: 'No permitido', cls: 'st-no', cell: '#fecaca' },
+  BLOQUEO: { label: 'Bloqueo académico', cls: 'st-bloqueo', cell: '#fecaca' },
+  AUTORIZABLE: { label: 'Autorizable con solicitud', cls: 'st-ok', cell: '#fde68a' }
+};
+
+function bloqueoEntry(meta) {
+  const cursos = BLOQUEOS?.cursos || {};
+  const code = courseCode(meta);
+  if (cursos[code]) return { code, entry: cursos[code], via: '' };
+  for (const k of [meta.lc, meta.conector]) {
+    const inherited = LC_BLOQUEO_CODE[normalizeText(k)];
+    if (inherited) return { code: inherited, entry: cursos[inherited], via: normalizeText(k) };
+  }
+  return null; // sin información → se considera libre
+}
+
+function isBlockBlocked(rec) {
+  const info = bloqueoEntry(rec.meta);
+  if (!info) return { blocked: false, info: null, reason: 'sin restricción registrada' };
+  const key = TIPO_SHORT[rec.tipo];
+  const mark = info.entry[key] || '';
+  const minEval = Number(STATIC_CONFIG?.bloqueoAyudMinEvaluaciones || 4);
+  if (mark === 'B') return { blocked: true, info, reason: `${key} bloqueada` };
+  if (key === 'AYUD' && mark === 'E' && Number(info.entry.numEval || 0) >= minEval) {
+    return { blocked: true, info, reason: `AYUD con ${info.entry.numEval} evaluaciones` };
+  }
+  return { blocked: false, info, reason: `${key} libre` };
+}
+
+function describeBlock(rec, st) {
+  const code = courseCode(rec.meta);
+  const src = st.info && st.info.code !== code ? ` (vía LC ${st.info.via} → ${st.info.code})` : '';
+  return `${code} ${st.reason}${src}`;
+}
+
+function classifyConflict(c) {
+  const tA = TIPO_SHORT[c.a.tipo] || c.a.tipo;
+  const tB = TIPO_SHORT[c.b.tipo] || c.b.tipo;
+  const pair = [tA, tB].sort().join('-');
+
+  if (c.a.eval || c.b.eval) {
+    return { status: 'NO_PERMITIDO', pair, detail: 'Involucra una evaluación' };
+  }
+  if (tA === 'CLAS' && tB === 'CLAS') {
+    return { status: 'NO_PERMITIDO', pair, detail: 'No se aceptan topes entre clases' };
+  }
+
+  const sA = isBlockBlocked(c.a);
+  const sB = isBlockBlocked(c.b);
+  const detail = `${describeBlock(c.a, sA)} · ${describeBlock(c.b, sB)}`;
+  if (sA.blocked && sB.blocked) return { status: 'BLOQUEO', pair, detail };
+  return { status: 'AUTORIZABLE', pair, detail };
+}
+
+function markCell(rowIndex, colIndex, message, color = '#fecaca') {
   const tr = currentRowElements[rowIndex];
   const td = tr?.children[colIndex];
   if (!td) return;
-  td.style.background = '#fecaca';
+  // Rojo tiene prioridad sobre ámbar si una celda participa en varios topes.
+  if (td.dataset.mark !== '#fecaca') {
+    td.style.background = color;
+    td.dataset.mark = color;
+  }
   td.classList.add('cell-conflict');
   const prev = td.title ? td.title.split('\n') : [];
   if (!prev.includes(message)) prev.push(message);
@@ -610,25 +717,51 @@ function clearConflictHighlights() {
     [...tr.children].forEach(td => {
       td.style.background = td.dataset.baseBg || '#ffffff';
       td.classList.remove('cell-conflict');
+      delete td.dataset.mark;
       td.title = '';
     });
   });
 }
 
-function renderConflictList(conflicts) {
+function renderConflictList(conflicts, mode) {
   const card = document.getElementById('conflictCard');
   const body = document.getElementById('conflictBody');
   const title = document.getElementById('conflictTitle');
+  const withNorm = mode === 'bloqueos';
   body.innerHTML = '';
-  title.textContent = `Topes encontrados: ${conflicts.length}`;
+  document.getElementById('conflictNormHeader').classList.toggle('hidden', !withNorm);
+  document.getElementById('conflictNote').classList.toggle('hidden', !withNorm);
+
+  if (withNorm) {
+    const n = { NO_PERMITIDO: 0, BLOQUEO: 0, AUTORIZABLE: 0 };
+    conflicts.forEach(c => n[c.norm.status]++);
+    // "Solo se permite un tope de horario por alumno": se cuentan pares de cursos.
+    const autorizablePairs = new Set(conflicts
+      .filter(c => c.norm.status === 'AUTORIZABLE')
+      .map(c => [c.a.nrc, c.b.nrc].sort().join('|')));
+    let t = `Topes encontrados: ${conflicts.length} · No permitidos: ${n.NO_PERMITIDO} · Bloqueo académico: ${n.BLOQUEO} · Autorizables: ${n.AUTORIZABLE}`;
+    if (studentContext && autorizablePairs.size > 1) {
+      t += ` · ⚠️ ${autorizablePairs.size} pares de cursos con tope autorizable: la normativa permite solo un tope por alumno`;
+    }
+    title.textContent = t;
+  } else {
+    title.textContent = `Topes encontrados: ${conflicts.length}`;
+  }
 
   conflicts.forEach(c => {
     const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td class="conflict-kind">${escapeHtml(c.kind)}</td>
+    const kind = withNorm ? `${c.norm.pair}` : c.kind;
+    let html = `
+      <td class="conflict-kind">${escapeHtml(kind)}</td>
       <td>${escapeHtml(c.when)}</td>
       <td>${escapeHtml(describeRow(c.a))}</td>
       <td>${escapeHtml(describeRow(c.b))}</td>`;
+    if (withNorm) {
+      const st = STATUS_STYLE[c.norm.status];
+      html += `<td><span class="status-badge ${st.cls}">${escapeHtml(st.label)}</span>` +
+              `<div class="status-detail">${escapeHtml(c.norm.detail)}</div></td>`;
+    }
+    tr.innerHTML = html;
     tr.addEventListener('click', () => scrollToRow(c.a.index));
     body.appendChild(tr);
   });
@@ -645,21 +778,35 @@ function scrollToRow(rowIndex) {
   tr.classList.add('row-flash');
 }
 
-function runConflictReview({ silent = false } = {}) {
+function runConflictReview({ silent = false, mode = 'basic' } = {}) {
   clearConflictHighlights();
   const conflicts = detectConflicts(currentRenderedRows);
+  const withNorm = mode === 'bloqueos';
 
   conflicts.forEach(c => {
-    const msg = `${c.kind}: NRC ${c.a.meta.nrc} y NRC ${c.b.meta.nrc}`;
+    let msg = `${c.kind}: NRC ${c.a.meta.nrc} y NRC ${c.b.meta.nrc}`;
+    let color = '#fecaca';
+    if (withNorm) {
+      c.norm = classifyConflict(c);
+      const st = STATUS_STYLE[c.norm.status];
+      msg = `${c.norm.pair} · ${st.label}: NRC ${c.a.meta.nrc} y NRC ${c.b.meta.nrc}`;
+      color = st.cell;
+    }
     c.recs.forEach(rec => {
-      markCell(rec.index, DAY_COLUMN_INDEX[c.day], msg);
-      if (rec.eval) markCell(rec.index, INICIO_COLUMN_INDEX, msg);
+      markCell(rec.index, DAY_COLUMN_INDEX[c.day], msg, color);
+      if (rec.eval) markCell(rec.index, INICIO_COLUMN_INDEX, msg, color);
     });
   });
 
+  if (withNorm) {
+    const order = { BLOQUEO: 0, NO_PERMITIDO: 1, AUTORIZABLE: 2 };
+    conflicts.sort((x, y) => order[x.norm.status] - order[y.norm.status] || x.a.index - y.a.index);
+  }
+
   conflictReviewActive = true;
+  reviewMode = mode;
   updateConflictButton();
-  renderConflictList(conflicts);
+  renderConflictList(conflicts, mode);
 
   if (!silent && !conflicts.length) {
     showModal('Revisión de topes', 'No se encuentran topes en la selección actual.');
@@ -667,17 +814,24 @@ function runConflictReview({ silent = false } = {}) {
   return conflicts;
 }
 
-function toggleConflictReview() {
-  if (conflictReviewActive) {
+function startReview(mode) {
+  if (conflictReviewActive && reviewMode === mode) {
     resetConflictReviewState();
+    return;
+  }
+  if (mode === 'bloqueos' && !BLOQUEOS?.cursos) {
+    showModal('Revisión de bloqueos', 'Aún no se ha publicado la información de bloqueos académicos (data/bloqueos.json).');
     return;
   }
   if (currentRenderedRows.length > 1500) {
     showModal('Revisión de topes', 'La selección es muy grande. Filtra primero (por ejemplo por NRC o cargando un alumno) para revisar topes.');
     return;
   }
-  runConflictReview();
+  runConflictReview({ mode });
 }
+
+function toggleConflictReview() { startReview('basic'); }
+function toggleBloqueoReview() { startReview('bloqueos'); }
 
 function resetConflictReviewState() {
   conflictReviewActive = false;
@@ -687,7 +841,8 @@ function resetConflictReviewState() {
 }
 
 function updateConflictButton() {
-  document.getElementById('conflictBtn')?.classList.toggle('active', conflictReviewActive);
+  document.getElementById('conflictBtn')?.classList.toggle('active', conflictReviewActive && reviewMode === 'basic');
+  document.getElementById('bloqueoBtn')?.classList.toggle('active', conflictReviewActive && reviewMode === 'bloqueos');
 }
 
 /* --------------------------------------------------------------------------

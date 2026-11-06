@@ -23,7 +23,7 @@ const SOURCE_SS_ID = '';  // Sin valor por defecto: usar "Configurar MAESTRO fue
 const PARAMS_SHEET_NAME = 'PARAMETROS_HORARIO';
 const DEFAULT_PERIODO = '202710';
 const DEFAULT_BRANCH = 'main';
-const DEFAULT_GITHUB_OWNER = 'sfuenzalidad-coder';
+const DEFAULT_GITHUB_OWNER = 'S-Fuenzalida-ING-PROCESOS';
 const DEFAULT_GITHUB_REPO = 'REVISION-TOPES-HORARIO';
 
 const SOURCE_SS_ID_PROP = 'SOURCE_SS_ID';
@@ -436,6 +436,14 @@ function publishAllStaticFilesToGitHub() {
       'data/data.json': dataPayload
     };
 
+    // Bloqueos académicos: opcional. Si la hoja no existe, la web avisa al usar el botón.
+    let bloqueosMsg = 'Hoja ' + BLOQUEOS_SHEET_NAME + ' no encontrada: no se publicaron bloqueos.';
+    const bloqueosPayload = buildBloqueosPayload_();
+    if (bloqueosPayload) {
+      payloads['data/bloqueos.json'] = bloqueosPayload;
+      bloqueosMsg = 'Cursos con información de bloqueo: ' + Object.keys(bloqueosPayload.cursos).length;
+    }
+
     const results = Object.keys(payloads).map(path =>
       upsertGitHubFile_(cfg, path, JSON.stringify(payloads[path], null, 1), 'Actualiza ' + path)
     );
@@ -448,6 +456,7 @@ function publishAllStaticFilesToGitHub() {
       'Repositorio: ' + cfg.owner + '/' + cfg.repo + ' (' + cfg.branch + ')',
       'Periodo: ' + configPayload.periodo,
       'Filas HORARIO publicadas: ' + dataPayload.rows.length,
+      bloqueosMsg,
       '',
       ...results.map(r => '- ' + r.path + ' (' + r.action + ')')
     ].join('\n'));
@@ -465,8 +474,78 @@ function buildConfigPayload_() {
   return {
     periodo: getPeriodo_(),
     horarioOnlyDownloadUrl: getHorarioOnlyExcelEndpointUrl_(),
-    rutLookupUrl: getWebAppUrl_()
+    rutLookupUrl: getWebAppUrl_(),
+    bloqueoAyudMinEvaluaciones: BLOQUEO_AYUD_MIN_EVAL
   };
+}
+
+/*******************************
+ * BLOQUEOS ACADEMICOS (hoja BLOQUEOS)
+ *
+ * Una fila por curso (códigos del plan 2026). Columnas por encabezado:
+ * CODIGO, TITULO, Clases, Ayudantías, Laboratorios o Talleres, NUM EVALUACIONES.
+ * Celda con texto BLOQUEADO (o fondo amarillo)  → bloque bloqueado ("B").
+ * Celda con texto EVALUACIONES (o fondo azul)   → evaluaciones en el bloque ("E").
+ * La regla "AYUD con 4+ evaluaciones = bloqueada" se aplica en la web.
+ *******************************/
+const BLOQUEOS_SHEET_NAME = 'BLOQUEOS';
+const BLOQUEO_AYUD_MIN_EVAL = 4;
+
+function classifyBloqueoCell_(text, bg) {
+  const t = String(text || '').toUpperCase();
+  if (t.indexOf('BLOQUE') >= 0) return 'B';
+  if (t.indexOf('EVALUA') >= 0) return 'E';
+
+  const m = /^#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(String(bg || ''));
+  if (!m) return '';
+  const r = parseInt(m[1], 16), g = parseInt(m[2], 16), b = parseInt(m[3], 16);
+  if (r > 200 && g > 200 && b < 140) return 'B';           // amarillo
+  if (b > 200 && b > r + 15 && b > g + 5) return 'E';       // azul
+  return '';
+}
+
+function buildBloqueosPayload_() {
+  const sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(BLOQUEOS_SHEET_NAME);
+  if (!sh || sh.getLastRow() < 2) return null;
+
+  const range = sh.getDataRange();
+  const values = range.getDisplayValues();
+  const bgs = range.getBackgrounds();
+  const idx = buildHeaderIndexNormalized_(values[0]);
+
+  const col = {
+    codigo: getFirstExistingIndex_(idx, ['CODIGO', 'CÓDIGO']),
+    titulo: getFirstExistingIndex_(idx, ['TITULO', 'TÍTULO']),
+    numEval: getFirstExistingIndex_(idx, ['NUM EVALUACIONES', 'N EVALUACIONES']),
+    CLAS: getFirstExistingIndex_(idx, ['CLASES']),
+    AYUD: getFirstExistingIndex_(idx, ['AYUDANTÍAS', 'AYUDANTIAS']),
+    LAB: getFirstExistingIndex_(idx, ['LABORATORIOS O TALLERES', 'LABORATORIOS'])
+  };
+  ['codigo', 'CLAS', 'AYUD', 'LAB'].forEach(k => {
+    if (col[k] < 0) throw new Error('Falta la columna ' + k + ' en la hoja ' + BLOQUEOS_SHEET_NAME + '.');
+  });
+
+  const cursos = {};
+  for (let r = 1; r < values.length; r++) {
+    const codigo = String(values[r][col.codigo] || '').replace(/\s+/g, '').toUpperCase();
+    if (!codigo) continue;
+
+    const e = cursos[codigo] || (cursos[codigo] = {
+      titulo: col.titulo >= 0 ? String(values[r][col.titulo] || '').trim() : '',
+      numEval: 0, CLAS: '', AYUD: '', LAB: ''
+    });
+
+    const n = col.numEval >= 0 ? parseInt(values[r][col.numEval], 10) : 0;
+    if (!isNaN(n)) e.numEval = Math.max(e.numEval, n);
+
+    // Filas duplicadas del mismo código: BLOQUEADO prevalece sobre EVALUACIONES.
+    ['CLAS', 'AYUD', 'LAB'].forEach(k => {
+      const v = classifyBloqueoCell_(values[r][col[k]], bgs[r][col[k]]);
+      if (v === 'B' || (v && !e[k])) e[k] = v;
+    });
+  }
+
+  return { generatedAt: new Date().toISOString(), periodo: getPeriodo_(), cursos };
 }
 
 function validateWebPayloadsBeforePublish_(configPayload, dataPayload, downloadFileId) {
@@ -697,6 +776,19 @@ function diagnoseWebPublishState() {
     lines.push('Filas HORARIO: ' + p.rows.length);
   } catch (e) {
     lines.push('HORARIO: ERROR ' + e.message);
+  }
+
+  try {
+    const bq = buildBloqueosPayload_();
+    if (bq) {
+      const c = Object.values(bq.cursos);
+      const nB = c.reduce((s, e) => s + ['CLAS', 'AYUD', 'LAB'].filter(k => e[k] === 'B').length, 0);
+      lines.push('Bloqueos: ' + c.length + ' cursos, ' + nB + ' bloques bloqueados');
+    } else {
+      lines.push('Bloqueos: hoja ' + BLOQUEOS_SHEET_NAME + ' no encontrada');
+    }
+  } catch (e) {
+    lines.push('Bloqueos: ERROR ' + e.message);
   }
 
   const ins = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(INSCRIPCIONES_SHEET_NAME);
