@@ -1,5 +1,6 @@
 {
  "periodo": "202620",
- "horarioOnlyDownloadUrl": "https://script.google.com/macros/s/AKfycbwcNtDPYIbyir3qc__VvjJqQUQUs-8GtbknLa63s6TC6RZ1ahjG5QdAAHNfj2rxrnTlWw/exec?action=downloadHorarioExcel",
- "rutLookupUrl": "https://script.google.com/macros/s/AKfycbwcNtDPYIbyir3qc__VvjJqQUQUs-8GtbknLa63s6TC6RZ1ahjG5QdAAHNfj2rxrnTlWw/exec"
+ "horarioOnlyDownloadUrl": "https://script.google.com/macros/s/AKfycbwz34zleE05k9uWm8oS7l6cusjIHj7_lw_jHJyOc5qsfF3IQKTHZ_V5Rm_571zt00yVSQ/exec?action=downloadHorarioExcel",
+ "rutLookupUrl": "https://script.google.com/macros/s/AKfycbwz34zleE05k9uWm8oS7l6cusjIHj7_lw_jHJyOc5qsfF3IQKTHZ_V5Rm_571zt00yVSQ/exec",
+ "bloqueoAyudMinEvaluaciones": 4
 }
