@@ -88,10 +88,21 @@ distinto número de curso).
 Los NRC inscritos que no están en la hoja HORARIO (por ejemplo, CEG u otros
 cursos de otras facultades) se listan aparte y no se revisan.
 
-## Nota sobre fechas de primer semestre
+## Fechas de CLAS / AYUD / LAB en HORARIO
 
-`createHorario` resta 2 días al inicio de CLAS/AYUD/LAB en cursos con
-`Plan Común = 1`. En la versión anterior ese ajuste no se aplicaba, porque las
-fechas de `PARAMETROS_HORARIO` se leían mal; en `Web.gs` esa lectura está
-corregida, así que **ahora sí se aplicará**. Si no corresponde, cambiar en
-`Horario.gs` la línea `shiftDateString_(ini, -2, tz)` por `0`.
+Mismas reglas que la hoja DPSA del MAESTRO. Se configuran en `PARAMETROS_HORARIO`:
+
+| Parámetro | Uso |
+|---|---|
+| `PERIODO` | Si termina en `10` es primer semestre. |
+| `CLASS_START` | Inicio de CLAS y de LAB de cursos que solo tienen LAB. |
+| `CLASS_START_PRIMER_SEMESTRE` | Solo primer semestre: reemplaza a `CLASS_START` en cursos con `1` en `Plan Común`. Las AYUD mantienen `AYUD_START`. |
+| `AYUD_START` | Inicio de AYUD y del resto de los LAB. |
+| `CLASS_END` | Fin de CLAS, AYUD y LAB (`AYUD_END` ya no se usa). |
+| `FIN_ING1103`, `FIN_ING6103` | Fin propio de Programación y Proyecto de Título 2, en todos sus bloques. |
+
+Cursos con `AREA = FACULTAD CEG`: todos sus bloques terminan el día anterior a su
+EXAM (sin EXAM, `CLASS_END`). Prioridad del fin: código con fin propio > CEG > `CLASS_END`.
+
+El ajuste fijo de −2 días al inicio de Plan Común = 1 se eliminó; lo reemplaza
+`CLASS_START_PRIMER_SEMESTRE`.

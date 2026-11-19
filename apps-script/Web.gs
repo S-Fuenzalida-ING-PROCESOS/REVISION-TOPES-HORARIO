@@ -54,10 +54,10 @@ function ensureParametrosHorarioSheet_() {
     ['KEY', 'VALUE', 'DESCRIPCION'],
     ['PERIODO', DEFAULT_PERIODO, 'Periodo académico (ej: 202710)'],
     ['CLASS_START', '', 'Inicio de CLAS (fecha)'],
-    ['CLASS_END', '', 'Fin de CLAS (fecha)'],
+    ['CLASS_START_PRIMER_SEMESTRE', '', 'Solo primer semestre (PERIODO termina en 10): inicio de CLAS de cursos con "1" en Plan Común'],
     ['AYUD_START', '', 'Inicio de AYUD/LAB (fecha)'],
-    ['AYUD_END', '', 'Fin de AYUD/LAB (fecha)']
-  ];
+    ['CLASS_END', '', 'Fin de CLAS, AYUD y LAB (fecha)']
+  ].concat(HORARIO_CURSOS_FIN_PROPIO.map(c => [c.param, '', `Fin de ${c.nombre} - ${c.codigo}, todos sus bloques (fecha)`]));
 
   if (!sh) {
     sh = ss.insertSheet(PARAMS_SHEET_NAME);
@@ -79,6 +79,13 @@ function ensureParametrosHorarioSheet_() {
   const missing = defaultRows.slice(1).filter(r => !keys.has(r[0]));
   if (missing.length) {
     sh.getRange(sh.getLastRow() + 1, 1, missing.length, 3).setValues(missing);
+  }
+
+  // AYUD_END quedó obsoleto (AYUD/LAB terminan en CLASS_END): se marca si existe.
+  for (let i = 1; i < existing.length; i++) {
+    if (String(existing[i][0] || '').trim().toUpperCase() !== 'AYUD_END') continue;
+    const nota = 'NO SE USA: AYUD/LAB terminan en CLASS_END (se puede borrar esta fila)';
+    if (String(existing[i][2] || '') !== nota) sh.getRange(i + 1, 3).setValue(nota);
   }
   return sh;
 }
@@ -102,13 +109,23 @@ function getParamsMap_() {
   return map;
 }
 
+// Cursos con fecha de fin propia para todos sus bloques (igual que la hoja DPSA).
+const HORARIO_CURSOS_FIN_PROPIO = [
+  { codigo: 'ING1103', nombre: 'Programación', param: 'FIN_ING1103' },
+  { codigo: 'ING6103', nombre: 'Proyecto de Título 2', param: 'FIN_ING6103' }
+];
+
 function getHorarioParams_() {
   const map = getParamsMap_();
+  const finPorCodigo = {};
+  HORARIO_CURSOS_FIN_PROPIO.forEach(c => { finPorCodigo[c.codigo] = map[c.param] || ''; });
   return {
+    periodo: map['PERIODO'] || DEFAULT_PERIODO,
     classStart: map['CLASS_START'] || '',
-    classEnd: map['CLASS_END'] || '',
+    classStartPrimerSemestre: map['CLASS_START_PRIMER_SEMESTRE'] || '',
+    classEnd: map['CLASS_END'] || '',     // fin único de CLAS, AYUD y LAB (AYUD_END ya no se usa)
     ayudStart: map['AYUD_START'] || '',
-    ayudEnd: map['AYUD_END'] || ''
+    finPorCodigo
   };
 }
 
