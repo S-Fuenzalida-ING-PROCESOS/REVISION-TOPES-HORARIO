@@ -95,9 +95,9 @@ Mismas reglas que la hoja DPSA del MAESTRO. Se configuran en `PARAMETROS_HORARIO
 | Parámetro | Uso |
 |---|---|
 | `PERIODO` | Si termina en `10` es primer semestre. |
-| `CLASS_START` | Inicio de CLAS y de LAB de cursos que solo tienen LAB. |
+| `CLASS_START` | Inicio de CLAS y de LAB de cursos sin CLAS (tengan o no AYUD). |
 | `CLASS_START_PRIMER_SEMESTRE` | Solo primer semestre: reemplaza a `CLASS_START` en cursos con `1` en `Plan Común`. Las AYUD mantienen `AYUD_START`. |
-| `AYUD_START` | Inicio de AYUD y del resto de los LAB. |
+| `AYUD_START` | Inicio de AYUD y de LAB de cursos con CLAS. |
 | `CLASS_END` | Fin de CLAS, AYUD y LAB (`AYUD_END` ya no se usa). |
 | `FIN_ING1103`, `FIN_ING6103` | Fin propio de Programación y Proyecto de Título 2, en todos sus bloques. |
 

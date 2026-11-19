@@ -4,8 +4,8 @@
  * Copiado del script anterior (desde normalizeName hasta updateSalasPruebas).
  *
  * Fechas de CLAS/AYUD/LAB (mismas reglas que la hoja DPSA del MAESTRO):
- *  - Inicio: CLASS_START para CLAS y para LAB de cursos que solo tienen LAB;
- *    AYUD_START para AYUD y el resto de los LAB. En primer semestre (PERIODO
+ *  - Inicio: CLASS_START para CLAS y para LAB de cursos sin CLAS (tengan o no
+ *    AYUD); AYUD_START para AYUD y para LAB de cursos con CLAS. En primer semestre (PERIODO
  *    termina en 10), los cursos con "1" en "Plan Común" usan
  *    CLASS_START_PRIMER_SEMESTRE en vez de CLASS_START.
  *  - Fin: CLASS_END para todos los tipos, salvo:
@@ -1212,6 +1212,11 @@ function createHorario() {
     );
     const mainProf = b1 + (b2 ? '+' + b2 : '');
 
+    // Fechas: el LAB parte con el inicio de clases si el curso no tiene CLAS
+    // (tenga o no AYUD), igual que la hoja DPSA. onlyLabtProgramado se sigue
+    // usando solo para decidir el profesor de las filas LAB.
+    const labSinClas = !getWeeklyMeetingTypeSet_(scheduleRow, mIdx, days).has('CLAS');
+
     // Fechas propias del curso. Se toman de la fila que aporta el horario
     // (en una LC sin horario propio, la del mandante), igual que área y NRC.
     const isFirstSemester = !!classStartPrimerSemestre &&
@@ -1246,7 +1251,7 @@ function createHorario() {
         } else if (tipo === 'AYUD') {
           ini = ayudStart;
         } else if (tipo === 'LAB/TALLER') {
-          ini = onlyLabtProgramado ? inicioClases : ayudStart;
+          ini = labSinClas ? inicioClases : ayudStart;
         }
         if (ini) fin = finCurso || classEnd;
 
